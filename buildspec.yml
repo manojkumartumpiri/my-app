@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region eu-north-1 | docker login --username AWS --password-stdin 211125769378.dkr.ecr.eu-north-1.amazonaws.com
+  build:
+    commands:
+      - echo Building backend image...
+      - docker build -t my-app-backend ./backend
+      - docker tag my-app-backend:latest 211125769378.dkr.ecr.eu-north-1.amazonaws.com/my-app-backend:latest
+      - echo Building frontend image...
+      - docker build -t my-app-frontend ./frontend
+      - docker tag my-app-frontend:latest 211125769378.dkr.ecr.eu-north-1.amazonaws.com/my-app-frontend:latest
+  post_build:
+    commands:
+      - echo Pushing backend image...
+      - docker push 211125769378.dkr.ecr.eu-north-1.amazonaws.com/my-app-backend:latest
+      - echo Pushing frontend image...
+      - docker push 211125769378.dkr.ecr.eu-north-1.amazonaws.com/my-app-frontend:latest
+artifacts:
+  files: '**/*'

@@ -12,12 +12,12 @@ phases:
       - docker tag my-app-backend:latest 211125769378.dkr.ecr.eu-north-1.amazonaws.com/my-app-backend:latest
       - echo Building frontend image...
       - docker build -t my-app-frontend ./frontend
-      - docker tag my-app-frontend:latest 211125769378.dkr.ecr.eu-north-1.amazonaws.com/my-app-frontend:latest
+      - docker tag my-app-frontend:latest 211125769378.dkr.ecr.eu-north-1.amazonaws.com/my-app:latest
   post_build:
     commands:
       - echo Pushing backend image...
       - docker push 211125769378.dkr.ecr.eu-north-1.amazonaws.com/my-app-backend:latest
       - echo Pushing frontend image...
-      - docker push 211125769378.dkr.ecr.eu-north-1.amazonaws.com/my-app-frontend:latest
+      - docker push 211125769378.dkr.ecr.eu-north-1.amazonaws.com/my-app:latest
 artifacts:
   files: '**/*'
